@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    input[type=text],
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    label {
+        padding: 12px 12px 12px 0;
+        display: inline-block;
+    }
+
+    input[type=submit] {
+        background-color: #04AA6D;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    .container {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .col-25 {
+        float: left;
+        width: 25%;
+        margin-top: 6px;
+    }
+
+    .col-75 {
+        float: left;
+        width: 75%;
+        margin-top: 6px;
+
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+        
+    }
+    .row {
+        width: 50%;
+    }
+    
+
+
+    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+
+        .col-25,
+        .col-75,
+        input[type=submit] {
+            width: 100%;
+            margin-top: 0;
+        }
+        
+    .container {
+        
+        flex-direction: column;
+    }
+    }
+</style>
+<html>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-25">
+                <label for="loanAmount">Enter the loan amount:</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="loanAmount" name="loanAmount" placeholder="Loan amount...">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="loandis">Loan Amount:</label>
+
+            </div>
+            <div class="col-75">
+                <label id="loandis"></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="loanCharges">Loan charges:</label>
+            </div>
+            <div class="col-75">
+                <label id="loanCharges"></label>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script type="text/javascript">
+    function getLoanCharges(loanAmount) {
+        if (!isNaN(loanAmount)) {
+            loanAmount = parseInt(loanAmount, 10);
+            if (loanAmount <= 25000) {
+                return "Nil"
+            } else if (loanAmount > 25000 && loanAmount <= 50000) {
+                return "Rs: 125"
+            } else if (loanAmount > 50000 && loanAmount <= 100000) {
+                return "Rs: 180"
+            } else if (loanAmount > 100000 && loanAmount <= 200000) {
+                return "Rs: 195"
+            } else if (loanAmount > 200000 && loanAmount <= 300000) {
+                return "Rs: 275"
+            } else if (loanAmount > 300000 && loanAmount <= 500000) {
+                return "Rs: 390"
+            } else if (loanAmount > 500000) {
+                return "Rs: " + (loanAmount / 100000) * 125;
+            }
+        } else {
+            return "Enter valid number"
+        }
+
+
+    }
+    window.onload = function () {
+        let loanAmountInp = document.getElementById("loanAmount");
+        let loanDisplay = document.getElementById("loandis");
+        let loanCharges = document.getElementById("loanCharges");
+        loanAmountInp.oninput = function () {
+            if (this.value != '') {
+                loanDisplay.textContent = isNaN(this.value) ? 'Input invalid!' : "Rs: " + this.value;;
+                loanCharges.textContent = getLoanCharges(this.value);
+            } else {
+                loanDisplay.textContent = "";
+                loanCharges.textContent = getLoanCharges(this.value);
+            }
+        };
+
+    }
+</script>
+
+</html>
